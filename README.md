@@ -4,29 +4,93 @@ A Java full-stack web application combining Project Portfolio & Kanban Task Mana
 
 ---
 
+## Tools and Technologies Used
+
+- Java JDK 17+: Powers the backend Spring Boot REST API.
+- Spring Boot 3.3.x: Core application framework, dependency injection, and REST controllers.
+- Spring Security 6: Stateless authentication, BCrypt password hashing, and endpoint security.
+- Spring Data JPA and Hibernate: Relational database mapping and repository queries.
+- H2 / PostgreSQL: In-memory database for local development and PostgreSQL for production.
+- Node.js and npm: Runtime and package manager for frontend dependencies.
+- React 18: Single Page Application component library.
+- Vite: Build tool and local development server for fast hot module reloading.
+- Tailwind CSS: Utility-first styling system.
+- Lucide React: Icons for UI navigation and status indicators.
+- Git: Version control and daily milestone tracking.
+
+---
+
+## How to Run the Application
+
+You will need two terminal windows open: one for the frontend and one for the backend.
+
+### Terminal 1: Run Frontend (React + Vite)
+
+1. Open a terminal in the root project folder:
+   ```bash
+   cd frontend
+   ```
+
+2. If running for the first time, install packages (already installed in workspace):
+   ```bash
+   npm install
+   ```
+
+3. Start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser and visit:
+   ```text
+   http://localhost:5173
+   ```
+   You will see the interactive dashboard, 4-week daily TO-DO checklist, and health checker.
+
+---
+
+### Terminal 2: Run Backend (Spring Boot 3 REST API)
+
+#### Option A: Running from IDE (Recommended)
+1. Open the project in IntelliJ IDEA, Eclipse, or VS Code.
+2. Locate the file:
+   `backend/src/main/java/com/epsm/EnterprisePlatformApplication.java`
+3. Right-click and choose "Run EnterprisePlatformApplication".
+4. The server starts on port 8080.
+
+#### Option B: Running from Terminal (Maven)
+1. Open a terminal in the root project folder:
+   ```bash
+   cd backend
+   mvn spring-boot:run
+   ```
+
+5. Verify the backend is active by opening in browser or making a GET request:
+   ```text
+   http://localhost:8080/api/v1/health
+   ```
+   You will receive the JSON response confirming the system status is UP.
+
+---
+
 ## GitHub Repository and Setup
 
 Repository URL: https://github.com/yraj3342/TASK-APP-PRJ_INTERNSHIP-JAVA
 
-Clone repository:
-```bash
-git clone https://github.com/yraj3342/TASK-APP-PRJ_INTERNSHIP-JAVA.git
-cd TASK-APP-PRJ_INTERNSHIP-JAVA
-```
-
-Initial setup (run once):
+### Initial Setup (Run Once on Your Machine)
+When you create your repository on GitHub, run:
 ```bash
 git remote add origin https://github.com/yraj3342/TASK-APP-PRJ_INTERNSHIP-JAVA.git
 git branch -M main
 git push -u origin main
 ```
 
-Daily push flow:
+### Daily 5% Push Flow (Whenever You Are Ready to Push)
 ```bash
-git status
-git add .
-git commit -m "feat: day X milestone"
-git push
+git status                            # check changed files
+git add .                             # stage today's changes
+git commit -m "feat: day X milestone" # save with message
+git push                              # send to your GitHub
 ```
 
 ---
@@ -81,7 +145,7 @@ Progress is tracked in docs/ROADMAP_20_DAYS.md and local TODO.md.
 ```text
 TASK-APP-PRJ_INTERNSHIP-JAVA/
 |-- .gitignore                      # Excludes struct img, TODO.md, target, node_modules, PDFs
-|-- README.md                       # Main documentation
+|-- README.md                       # Main documentation and how-to-run guide
 |
 |-- backend/                        # Java Spring Boot 3 REST API
 |   |-- src/main/java/com/epsm/
@@ -108,28 +172,3 @@ TASK-APP-PRJ_INTERNSHIP-JAVA/
     |-- TASKS.md                    # Sprint checklist
     `-- ARCHITECTURE.md             # System technical specifications
 ```
-
----
-
-## Getting Started
-
-### Prerequisites
-- Java Development Kit (JDK 17+)
-- Maven 3.8+ (or IDE built-in Maven)
-- Node.js (v18+) and npm
-
-### Running Locally
-
-1. Backend (Spring Boot 3):
-   ```bash
-   cd backend
-   mvn spring-boot:run
-   ```
-   Backend runs at http://localhost:8080 (Health check: http://localhost:8080/api/v1/health)
-
-2. Frontend (React + Vite):
-   ```bash
-   cd frontend
-   npm run dev
-   ```
-   Frontend runs at http://localhost:5173
