@@ -47,7 +47,7 @@ Tracked in `docs/ROADMAP_20_DAYS.md` and local `TODO.md`.
 TASK-APP-PRJ_INTERNSHIP-JAVA/
 |-- backend/    # Spring Boot 3 REST API (Pure ORM, Controllers, Security)
 |-- frontend/   # React 18 SPA (Vite, Tailwind CSS, Dashboard UI)
-|-- docs/       # Technical specs, architecture, and 20-day roadmap
+|-- docs/       # Technical specs, PDF, architecture, and 20-day roadmap
 |-- .gitignore  # Excludes build outputs, struct img, and TODO.md
 `-- README.md   # Project overview
 ```
