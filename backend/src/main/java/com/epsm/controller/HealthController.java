@@ -1,12 +1,12 @@
 package com.epsm.controller;
 
+import com.epsm.dto.ApiResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -14,13 +14,15 @@ import java.util.Map;
 public class HealthController {
 
     @GetMapping
-    public ResponseEntity<Map<String, Object>> getHealthStatus() {
-        Map<String, Object> status = new HashMap<>();
-        status.put("status", "UP");
-        status.put("application", "Enterprise Project & Service Management Platform");
-        status.put("version", "1.0.0-SNAPSHOT");
-        status.put("timestamp", LocalDateTime.now());
-        status.put("day1_scaffolding", "5% Milestone Initialized");
-        return ResponseEntity.ok(status);
+    public ResponseEntity<ApiResponse<Map<String, Object>>> checkHealth() {
+        Map<String, Object> details = new LinkedHashMap<>();
+        details.put("status", "UP");
+        details.put("service", "Enterprise Project & Service Management Platform");
+        details.put("environment", "Development");
+        details.put("milestone", "Day 1 (5% Baseline)");
+        details.put("security", "Spring Security 6 Active (Stateless)");
+        details.put("database", "H2 In-Memory / PostgreSQL Ready");
+
+        return ResponseEntity.ok(ApiResponse.success("System is healthy and operational", details));
     }
 }

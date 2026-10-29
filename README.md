@@ -5,9 +5,23 @@
 ![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql)
-![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)
+![Daily Progress](https://img.shields.io/badge/Daily_Goal-5%25_%2F_Day-success?style=for-the-badge)
+![Current Status](https://img.shields.io/badge/Status-Day_1_(5%25)_Complete-brightgreen?style=for-the-badge)
 
 An enterprise-grade Java full-stack web application combining **Project Portfolio & Kanban Task Management** (Jira-style) with **IT Service Desk, Real-Time SLA Monitoring & Workload Balancing** (ServiceNow-style) into a single, unified business platform.
+
+---
+
+## 📈 4-Week Progress Dashboard (5% / Day)
+
+Track our 20-day delivery roadmap in [TODO.md](file:///c:/Users/yraj3/Desktop/TASK%20APP%20PRJ_INTERSHIP%20JAVA/TODO.md) and [docs/ROADMAP_20_DAYS.md](file:///c:/Users/yraj3/Desktop/TASK%20APP%20PRJ_INTERSHIP%20JAVA/docs/ROADMAP_20_DAYS.md).
+
+| Week | Focus Area | Daily Target | Cumulative Progress | Status |
+|:---:|:---|:---:|:---:|:---:|
+| **Week 1** | Scaffolding, Persistence, RBAC Identity & Project Domain | 5% / day | **25%** | 🚀 In Progress (Day 1 Done) |
+| **Week 2** | Kanban Engine, Service Desk, SLA Countdown & Workload Matrix | 5% / day | **50%** | ⏳ Scheduled |
+| **Week 3** | React 18 SPA, Auth Guards, Executive Dashboard & Kanban UI | 5% / day | **75%** | ⏳ Scheduled |
+| **Week 4** | SLA Live Gauges, Resource Heatmaps, Recharts & Docker Release | 5% / day | **100%** | ⏳ Scheduled |
 
 ---
 
@@ -63,19 +77,33 @@ graph TB
 
 ```text
 TASK-APP-PRJ_INTERNSHIP-JAVA/
+├── 📄 .gitignore                      # Excludes struct img, target, node_modules, PDFs
+├── 📄 TODO.md                         # 4-Week daily 5% progress checklist
+├── 📄 README.md                       # Main documentation & architecture guide
+│
 ├── 📁 backend/                        # Java Spring Boot 3 REST API
-│   ├── 📁 src/main/java/com/epsm/     # Domain controllers, services, entities, security
-│   ├── 📁 src/main/resources/         # application.yml, schema migrations
-│   └── 📄 pom.xml                     # Maven dependencies
+│   ├── 📁 src/main/java/com/epsm/
+│   │   ├── 📁 config/                 # SecurityConfig, WebMvcConfig (CORS)
+│   │   ├── 📁 controller/             # HealthController, REST Controllers
+│   │   ├── 📁 dto/                    # ApiResponse<T> standardized responses
+│   │   ├── 📁 exception/              # GlobalExceptionHandler, ResourceNotFoundException
+│   │   └── 📄 EnterprisePlatformApplication.java
+│   ├── 📁 src/main/resources/         # application.yml (H2 / Postgres profiles)
+│   └── 📄 pom.xml                     # Maven dependencies (Security, JPA, JWT, Lombok)
 │
 ├── 📁 frontend/                       # React.js Single Page Application
-│   ├── 📁 src/components/             # Kanban board, SLA timers, Workload matrix
-│   ├── 📁 src/pages/                  # Projects, Tasks, Tickets, Dashboard
-│   ├── 📁 src/services/               # Axios API clients
+│   ├── 📁 src/
+│   │   ├── 📁 components/             # Kanban board, SLA timers, Workload matrix
+│   │   ├── 📁 pages/                  # Projects, Tasks, Tickets, Dashboard
+│   │   ├── 📁 services/               # Axios API client (api.js with JWT interceptor)
+│   │   ├── 📄 App.jsx                 # Interactive dashboard & 4-week roadmap view
+│   │   └── 📄 main.jsx
+│   ├── 📄 vite.config.js              # Vite server & API proxy
 │   └── 📄 package.json                # Dependencies and scripts
 │
 └── 📁 docs/                           # Documentation & Specifications
     ├── 📄 ROADMAP_20_DAYS.md          # 20-Day 5% daily progress blueprint
+    ├── 📄 TASKS.md                    # Sprint checklist
     └── 📄 ARCHITECTURE.md             # System technical specifications
 ```
 
@@ -85,28 +113,23 @@ TASK-APP-PRJ_INTERNSHIP-JAVA/
 
 ### Prerequisites
 - **Java Development Kit (JDK 17+)**
-- **Maven 3.8+**
+- **Maven 3.8+** (or IDE built-in Maven)
 - **Node.js (v18+) & npm**
-- **PostgreSQL 15+** (or embedded H2 for quick start)
 
-### Quick Run
+### Running the Application
 
-1. **Backend (Spring Boot):**
+1. **Backend (Spring Boot 3):**
    ```bash
    cd backend
+   # In your IDE (IntelliJ / Eclipse / VS Code), run EnterprisePlatformApplication.java
+   # or with Maven:
    mvn spring-boot:run
    ```
-   *Runs at `http://localhost:8080` (API Docs at `/swagger-ui/index.html`)*
+   *Runs at `http://localhost:8080` (Health Check: `http://localhost:8080/api/v1/health`)*
 
 2. **Frontend (React + Vite):**
    ```bash
    cd frontend
-   npm install
    npm run dev
    ```
-   *Runs at `http://localhost:5173`*
-
----
-
-## 📜 Daily Progress Plan (5% Daily)
-See [docs/ROADMAP_20_DAYS.md](file:///c:/Users/yraj3/Desktop/TASK%20APP%20PRJ_INTERSHIP%20JAVA/docs/ROADMAP_20_DAYS.md) for the complete 20-day delivery roadmap.
+   *Runs at `http://localhost:5173` with proxy forwarding `/api` to the Spring Boot backend.*
