@@ -2,12 +2,10 @@
 # User & Internal Docs Exclusions
 # ==========================================
 struct img
-*.pdf
 TODO.md
 todo.md
 TASK.txt
 *.todo
-
 
 # ==========================================
 # Java & Maven
