@@ -45,7 +45,7 @@ function App() {
       percent: "5% - 25%",
       days: [
         { day: 1, percent: "5%", title: "Project Scaffolding and Git Governance", done: true, desc: "Git repo initialized, .gitignore (struct img and TODO ignored), Spring Boot 3 API baseline, React 18 UI, ApiResponse standard DTO, and Global Exception Handler." },
-        { day: 2, percent: "10%", title: "Persistence Layer and Base Entities", done: false, desc: "PostgreSQL and H2 dual profile, JPA Auditing, BaseEntity with createdAt/updatedAt." },
+        { day: 2, percent: "10%", title: "Pure ORM Persistence Layer", done: false, desc: "PostgreSQL and H2 JPA ORM profiles, Hibernate ddl-auto update, BaseEntity with createdAt/updatedAt." },
         { day: 3, percent: "15%", title: "User Entity and Role RBAC", done: false, desc: "5 Personas: Admin, PM, Team Lead, Member, Service Agent. BCrypt password hashing." },
         { day: 4, percent: "20%", title: "Stateless JWT Auth Engine", done: false, desc: "JwtTokenProvider, JwtAuthFilter, /api/v1/auth/login and register endpoints." },
         { day: 5, percent: "25%", title: "Project Portfolio Domain", done: false, desc: "Project Entity, CRUD REST API, auto health score indicators (ON_TRACK, AT_RISK, DELAYED)." }
