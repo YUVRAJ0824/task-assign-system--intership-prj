@@ -13,16 +13,17 @@ import java.util.Map;
 @RequestMapping("/api/v1/health")
 public class HealthController {
 
+    // Check system health
     @GetMapping
     public ResponseEntity<ApiResponse<Map<String, Object>>> checkHealth() {
-        Map<String, Object> details = new LinkedHashMap<>();
-        details.put("status", "UP");
-        details.put("service", "Enterprise Project & Service Management Platform");
-        details.put("environment", "Development");
-        details.put("milestone", "Day 1 (5% Baseline)");
-        details.put("security", "Spring Security 6 Active (Stateless)");
-        details.put("database", "H2 In-Memory / PostgreSQL Ready");
+        Map<String, Object> res = new LinkedHashMap<>();
+        res.put("status", "UP");
+        res.put("service", "EPSM Platform");
+        res.put("env", "dev");
+        res.put("day", "Day 1 (5%)");
+        res.put("security", "JWT Stateless");
+        res.put("db", "H2 / PostgreSQL");
 
-        return ResponseEntity.ok(ApiResponse.success("System is healthy and operational", details));
+        return ResponseEntity.ok(ApiResponse.success("System OK", res));
     }
 }

@@ -12,11 +12,37 @@ An enterprise-grade Java full-stack web application combining **Project Portfoli
 
 ---
 
+## 🔗 GitHub Repository & Setup
+
+- **GitHub Repo URL:** `https://github.com/yraj3342/TASK-APP-PRJ_INTERNSHIP-JAVA`
+- **Clone Repository:**
+  ```bash
+  git clone https://github.com/yraj3342/TASK-APP-PRJ_INTERNSHIP-JAVA.git
+  cd TASK-APP-PRJ_INTERNSHIP-JAVA
+  ```
+
+### Initial GitHub Push (Run Once)
+```bash
+git remote add origin https://github.com/yraj3342/TASK-APP-PRJ_INTERNSHIP-JAVA.git
+git branch -M main
+git push -u origin main
+```
+
+### Daily 5% Push Flow
+```bash
+git status                    # see what changed
+git add .                     # stage today's 5% progress
+git commit -m "feat: day X milestone" # save with message
+git push                      # send to GitHub
+```
+
+---
+
 ## 📈 4-Week Progress Dashboard (5% / Day)
 
-Track our 20-day delivery roadmap in [TODO.md](file:///c:/Users/yraj3/Desktop/TASK%20APP%20PRJ_INTERSHIP%20JAVA/TODO.md) and [docs/ROADMAP_20_DAYS.md](file:///c:/Users/yraj3/Desktop/TASK%20APP%20PRJ_INTERSHIP%20JAVA/docs/ROADMAP_20_DAYS.md).
+Track our 20-day delivery roadmap in [docs/ROADMAP_20_DAYS.md](file:///c:/Users/yraj3/Desktop/TASK%20APP%20PRJ_INTERSHIP%20JAVA/docs/ROADMAP_20_DAYS.md) and local `TODO.md`.
 
-| Week | Focus Area | Daily Target | Cumulative Progress | Status |
+| Week | Focus Area | Daily Pace | Cumulative Progress | Status |
 |:---:|:---|:---:|:---:|:---:|
 | **Week 1** | Scaffolding, Persistence, RBAC Identity & Project Domain | 5% / day | **25%** | 🚀 In Progress (Day 1 Done) |
 | **Week 2** | Kanban Engine, Service Desk, SLA Countdown & Workload Matrix | 5% / day | **50%** | ⏳ Scheduled |
@@ -77,8 +103,7 @@ graph TB
 
 ```text
 TASK-APP-PRJ_INTERNSHIP-JAVA/
-├── 📄 .gitignore                      # Excludes struct img, target, node_modules, PDFs
-├── 📄 TODO.md                         # 4-Week daily 5% progress checklist
+├── 📄 .gitignore                      # Excludes struct img, TODO.md, target, node_modules, PDFs
 ├── 📄 README.md                       # Main documentation & architecture guide
 │
 ├── 📁 backend/                        # Java Spring Boot 3 REST API
