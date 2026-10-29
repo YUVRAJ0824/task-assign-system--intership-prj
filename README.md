@@ -9,8 +9,8 @@ A Java full-stack web application combining Project Portfolio & Kanban Task Mana
 - Java JDK 17+: Powers the backend Spring Boot REST API.
 - Spring Boot 3.3.x: Core application framework, dependency injection, and REST controllers.
 - Spring Security 6: Stateless authentication, BCrypt password hashing, and endpoint security.
-- Spring Data JPA and Hibernate: Relational database mapping and repository queries.
-- H2 / PostgreSQL: In-memory database for local development and PostgreSQL for production.
+- Spring Data JPA and Hibernate: Pure Object-Relational Mapping (ORM) for data persistence. We use Java JPA Entities and Repositories instead of raw SQL queries or manual SQL scripts.
+- H2 / PostgreSQL: Relational database managed through Hibernate ORM schema generation.
 - Node.js and npm: Runtime and package manager for frontend dependencies.
 - React 18: Single Page Application component library.
 - Vite: Build tool and local development server for fast hot module reloading.
@@ -75,15 +75,16 @@ You will need two terminal windows open: one for the frontend and one for the ba
 
 ## GitHub Repository and Setup
 
-Repository URL: https://github.com/yraj3342/TASK-APP-PRJ_INTERNSHIP-JAVA
+Repository URL: https://github.com/YUVRAJ0824/task-assign-system--intership-prj.git
 
 ### Initial Setup (Run Once on Your Machine)
 When you create your repository on GitHub, run:
 ```bash
-git remote add origin https://github.com/yraj3342/TASK-APP-PRJ_INTERNSHIP-JAVA.git
+git remote add origin https://github.com/YUVRAJ0824/task-assign-system--intership-prj.git
 git branch -M main
 git push -u origin main
 ```
+
 
 ### Daily 5% Push Flow (Whenever You Are Ready to Push)
 ```bash
