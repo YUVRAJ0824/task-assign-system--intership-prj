@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   CheckCircle2, 
   Circle,
-  Layers, 
-  FolderKanban, 
-  Clock, 
-  Users, 
-  ShieldCheck, 
   Activity, 
-  ArrowRight,
   ListTodo
 } from 'lucide-react';
 
@@ -45,7 +39,7 @@ function App() {
       percent: "5% - 25%",
       days: [
         { day: 1, percent: "5%", title: "Project Scaffolding and Git Governance", done: true, desc: "Git repo initialized, .gitignore (struct img and TODO ignored), Spring Boot 3 API baseline, React 18 UI, ApiResponse standard DTO, and Global Exception Handler." },
-        { day: 2, percent: "10%", title: "Pure ORM Persistence Layer", done: false, desc: "PostgreSQL and H2 JPA ORM profiles, Hibernate ddl-auto update, BaseEntity with createdAt/updatedAt." },
+        { day: 2, percent: "10%", title: "Pure ORM Persistence Layer", done: true, desc: "PostgreSQL and H2 JPA ORM profiles, Hibernate ddl-auto update, BaseEntity with createdAt/updatedAt auditing." },
         { day: 3, percent: "15%", title: "User Entity and Role RBAC", done: false, desc: "5 Personas: Admin, PM, Team Lead, Member, Service Agent. BCrypt password hashing." },
         { day: 4, percent: "20%", title: "Stateless JWT Auth Engine", done: false, desc: "JwtTokenProvider, JwtAuthFilter, /api/v1/auth/login and register endpoints." },
         { day: 5, percent: "25%", title: "Project Portfolio Domain", done: false, desc: "Project Entity, CRUD REST API, auto health score indicators (ON_TRACK, AT_RISK, DELAYED)." }
@@ -108,7 +102,7 @@ function App() {
 
           <div className="flex items-center gap-4">
             <span className="px-2.5 py-1 rounded text-xs font-medium bg-slate-100 text-slate-700 border border-slate-300">
-              Day 1 Complete (5%)
+              Day 2 Complete (10%)
             </span>
           </div>
         </div>
@@ -133,16 +127,16 @@ function App() {
             <div className="pt-3 space-y-1.5">
               <div className="flex justify-between text-xs font-medium text-slate-300">
                 <span>Overall Completion</span>
-                <span>5% / 100%</span>
+                <span>10% / 100%</span>
               </div>
               <div className="w-full bg-slate-800 rounded h-2.5 overflow-hidden border border-slate-700">
                 <div 
                   className="bg-slate-300 h-2.5 rounded transition-all duration-500" 
-                  style={{ width: '5%' }}
+                  style={{ width: '10%' }}
                 ></div>
               </div>
               <p className="text-[11px] text-slate-400">
-                Day 1 (5%) Completed: Git configured, .gitignore set, Spring Boot 3 baseline, React 18 UI.
+                Day 2 (10%) Completed: Pure ORM setup (H2 &amp; PostgreSQL), JPA Auditing config, BaseEntity with createdAt/updatedAt.
               </p>
             </div>
           </div>
@@ -195,7 +189,7 @@ function App() {
                   className={`p-3.5 rounded border transition flex items-start gap-3 ${
                     d.done 
                       ? 'bg-slate-50 border-slate-300' 
-                      : d.day === 2 
+                      : d.day === 3 
                         ? 'bg-white border-slate-400 ring-1 ring-slate-400' 
                         : 'bg-white border-slate-200'
                   }`}
@@ -216,11 +210,11 @@ function App() {
                       <span className={`text-[10px] px-2 py-0.5 rounded font-medium ${
                         d.done 
                           ? 'bg-slate-200 text-slate-800' 
-                          : d.day === 2 
+                          : d.day === 3 
                             ? 'bg-slate-800 text-white' 
                             : 'bg-slate-100 text-slate-500'
                       }`}>
-                        {d.done ? 'Done' : d.day === 2 ? 'Next (Day 2)' : 'Pending'}
+                        {d.done ? 'Done' : d.day === 3 ? 'Next (Day 3)' : 'Pending'}
                       </span>
                     </div>
                     <p className="text-xs text-slate-600">
@@ -236,24 +230,24 @@ function App() {
         {/* Deliverables and Health Box */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white rounded-lg border border-slate-300 p-5 shadow-sm space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Day 1 Deliverables</span>
-            <h3 className="font-semibold text-slate-900 text-sm">Completed Today (5%)</h3>
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Day 2 Deliverables</span>
+            <h3 className="font-semibold text-slate-900 text-sm">Completed Today (10% Total)</h3>
             <ul className="text-xs text-slate-600 space-y-1.5">
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-slate-700 shrink-0" />
-                <span>Git configured with .gitignore (struct img, TODO.md ignored)</span>
+                <span>BaseEntity model: @MappedSuperclass with id, createdAt, updatedAt</span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-slate-700 shrink-0" />
-                <span>Spring Boot 3: ApiResponse, GlobalExceptionHandler, SecurityConfig</span>
+                <span>JpaConfig: @EnableJpaAuditing for automatic timestamp audits</span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-slate-700 shrink-0" />
-                <span>React 18 + Vite: Clean UI with 4-Week plan</span>
+                <span>Pure ORM configuration: H2 in-memory dev, PostgreSQL prod</span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-slate-700 shrink-0" />
-                <span>README updated with GitHub clone and push instructions</span>
+                <span>Health endpoint updated: ORM and JPA Auditing status active</span>
               </li>
             </ul>
           </div>
@@ -273,6 +267,7 @@ function App() {
                 <div>
                   <div className="font-semibold text-slate-900">Status: {healthStatus.data?.status || 'UP'}</div>
                   <div className="text-[11px] text-slate-500">{healthStatus.message || 'System operational'}</div>
+                  <div className="text-[11px] text-slate-600 mt-1 font-sans">{healthStatus.data?.milestone} - {healthStatus.data?.orm}</div>
                 </div>
               ) : (
                 <span className="text-slate-400">Backend not running on port 8080</span>

@@ -20,9 +20,9 @@ public class HealthController {
         res.put("status", "UP");
         res.put("service", "EPSM Platform");
         res.put("env", "dev");
-        res.put("day", "Day 1 (5%)");
-        res.put("security", "JWT Stateless");
-        res.put("db", "H2 / PostgreSQL");
+        res.put("milestone", "Day 2 (10%)");
+        res.put("orm", "Hibernate / JPA Auditing Active");
+        res.put("db", "H2 / PostgreSQL Ready");
 
         return ResponseEntity.ok(ApiResponse.success("System OK", res));
     }

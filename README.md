@@ -37,7 +37,7 @@ Tracked in `docs/ROADMAP_20_DAYS.md` and local `TODO.md`.
 
 | Week | Milestone Focus | Daily Pace | Progress | Status |
 |:---:|:---|:---:|:---:|:---:|
-| Week 1 | Scaffolding, Pure ORM, RBAC Identity, Projects | 5% / day | 25% | Day 1 Done (5%) |
+| Week 1 | Scaffolding, Pure ORM, RBAC Identity, Projects | 5% / day | 25% | Day 2 Done (10%) |
 | Week 2 | Kanban Engine, Tickets, SLA Timer, Workload | 5% / day | 50% | Scheduled |
 | Week 3 | React SPA, Auth Guards, Dashboard, Kanban UI | 5% / day | 75% | Scheduled |
 | Week 4 | SLA Gauges, Resource Heatmap, Recharts, Docker | 5% / day | 100% | Scheduled |

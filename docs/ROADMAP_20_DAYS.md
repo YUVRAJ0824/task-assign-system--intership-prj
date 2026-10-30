@@ -17,7 +17,7 @@ This roadmap divides the Enterprise Project and Service Management Platform into
 | Day | Progress | Phase | Key Deliverables | Status |
 |:---:|:---:|:---|:---|:---:|
 | Day 1 | 5% | Foundation | Git setup, .gitignore, Scaffolding (Backend and Frontend), Architecture, Base Config | Done |
-| Day 2 | 10% | Persistence | Pure ORM setup (PostgreSQL and H2 JPA), Hibernate ddl-auto update, BaseEntity | Pending |
+| Day 2 | 10% | Persistence | Pure ORM setup (PostgreSQL and H2 JPA), Hibernate ddl-auto update, BaseEntity | Done |
 | Day 3 | 15% | Identity | User entity, 5 RBAC roles (Admin, PM, Lead, Member, Agent), BCrypt hashing | Pending |
 | Day 4 | 20% | Security | Spring Security 6, JWT Token Provider, Login and Register API endpoints | Pending |
 | Day 5 | 25% | Projects | Project entity, Repository, Service and REST API (Health indicators, completion %) | Pending |
