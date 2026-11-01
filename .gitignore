@@ -1,4 +1,6 @@
-# Local ignored folder
+# Local Sandboxes & Docs (Ignored by Git)
+EXP/
+docs/
 ignore/
 
 # Build & Dependencies
