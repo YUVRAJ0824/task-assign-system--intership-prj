@@ -1,0 +1,21 @@
+# Local Sandboxes & Docs (Ignored by Git) folderor 
+#file name / is skip gits push
+EXP/
+ignore/
+
+# Build & Dependencies
+**/target/
+*.class
+*.jar
+*.war
+**/node_modules/
+**/dist/
+**/build/
+
+# Environment & IDE
+.env*
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
