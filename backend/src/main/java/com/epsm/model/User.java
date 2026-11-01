@@ -22,6 +22,7 @@ import lombok.Setter;
 public class User extends Baseentity {
 
     // 1. login details
+    // 1. login details
     @Column(nullable = false, unique = true, length = 50)
     private String username;
 
@@ -32,6 +33,7 @@ public class User extends Baseentity {
     private String password;
 
     // 2. role stored as string
+    // 2. role stored as string
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 30)
     private Role role;
@@ -40,6 +42,7 @@ public class User extends Baseentity {
     @Column(length = 50)
     private String department;
 
+    // 4. active status
     // 4. active status
     @Builder.Default
     @Column(nullable = false)

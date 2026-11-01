@@ -1,64 +1,57 @@
 # Enterprise Project and Service Management Platform
 
-Full-stack web application combining Jira-style Kanban task management with ServiceNow-style service desk, SLA countdowns, and workload balancing.
-
 ## GitHub Repository
-- URL: https://github.com/YUVRAJ0824/task-assign-system--intership-prj.git
-- Clone:
-  ```bash
-  git clone https://github.com/YUVRAJ0824/task-assign-system--intership-prj.git
-  ```
+URL: https://github.com/YUVRAJ0824/task-assign-system--intership-prj.git
+
+Clone command:
+```powershell
+git clone https://github.com/YUVRAJ0824/task-assign-system--intership-prj.git
+cd task-assign-system--intership-prj
+```
+
+## About the Project
+A unified Java full-stack enterprise platform that combines:
+- Project Portfolio and Kanban Task Governance (Jira-style task boards).
+- IT Service Desk and Ticket Lifecycle (ServiceNow-style ticketing).
+- Automated SLA Countdown Engine with 75% warning alerts and breach tracking.
+- Team Capacity and Workload Matrix with developer burnout alerts.
+- Role-Based Access Control for 5 roles (Admin, PM, Lead, Member, Agent).
 
 ## Tech Stack
 - Backend: Java 17+, Spring Boot 3.3.x, Spring Security 6 (stateless JWT).
 - Persistence: Pure ORM via Spring Data JPA and Hibernate (no raw SQL).
-- Database: H2 (in-memory dev) and PostgreSQL (production).
-- Frontend: React 18, Vite, Tailwind CSS, Axios.
+- Database: H2 (dev in-memory) and PostgreSQL (production ready).
+- Frontend: React 18, Vite, Tailwind CSS, Lucide Icons.
 
 ## How to Run
 
-### Terminal 1: Frontend
-```bash
+### 1. Frontend (React + Vite)
+Open PowerShell:
+```powershell
 cd frontend
-npm run dev
+npm.cmd run dev
 ```
-(If PowerShell script blocked: `npm.cmd run dev`)
-Runs at: http://localhost:5173
+(Or `npm run dev`)
+Open browser at: http://localhost:5173
 
-### Terminal 2: Backend
-```bash
+### 2. Backend (Spring Boot 3)
+Open a second PowerShell window:
+```powershell
 cd backend
 mvn spring-boot:run
 ```
-Runs at: http://localhost:8080 (Health: http://localhost:8080/api/v1/health)
-Or run `Appmain.java` in your IDE.
-
-## 4-Week Delivery Roadmap (5% Daily)
-Tracked in `docs/ROADMAP_20_DAYS.md` and `ignore/TODO.md`.
-
-| Week | Milestone Focus | Daily Pace | Progress | Status |
-|:---:|:---|:---:|:---:|:---:|
-| Week 1 | Scaffolding, Pure ORM, RBAC Identity, Projects | 5% / day | 25% | Day 3 Done (15%) |
-| Week 2 | Kanban Engine, Tickets, SLA Timer, Workload | 5% / day | 50% | Scheduled |
-| Week 3 | React SPA, Auth Guards, Dashboard, Kanban UI | 5% / day | 75% | Scheduled |
-| Week 4 | SLA Gauges, Resource Heatmap, Recharts, Docker | 5% / day | 100% | Scheduled |
+Or open the project in your IDE (IntelliJ / Eclipse / VS Code) and run `Appmain.java`.
+Server runs at: http://localhost:8080
+Health check endpoint: http://localhost:8080/api/v1/health
 
 ## Project Structure
 ```text
 TASK-APP-PRJ_INTERNSHIP-JAVA/
 |-- backend/    # Spring Boot 3 REST API (Pure ORM, Controllers, Security)
-|-- frontend/   # React 18 SPA (Vite, Tailwind CSS, Dashboard UI)
-|-- docs/       # Technical specs, PDF, architecture, and 20-day roadmap
-|-- ignore/     # Local ignored files (TODO.md, struct img)
-|-- .gitignore  # Excludes build outputs and ignore/ folder
-|-- GIT-CMD.md  # Git command cheat sheet and file tree outline
+|-- frontend/   # React 18 UI (Kanban board, SLA timers, Workload matrix)
+|-- docs/       # Architecture design and specification PDF
+|-- ignore/     # Local private files (ignored by Git)
+|-- .gitignore  # Git exclusions
+|-- GIT-CMD.md  # Git command list and cheat sheet
 `-- README.md   # Project overview
-```
-
-## Daily Git Push Flow
-```bash
-git status
-git add .
-git commit -m "day X: short message"
-git push
 ```

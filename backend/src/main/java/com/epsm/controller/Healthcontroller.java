@@ -19,12 +19,10 @@ public class Healthcontroller {
     public ResponseEntity<Apires<Map<String, Object>>> check() {
         Map<String, Object> res = new LinkedHashMap<>();
         res.put("status", "UP");
-        res.put("service", "EPSM Platform");
+        res.put("service", "Enterprise Project & Service Platform");
         res.put("env", "dev");
-        res.put("day", "Day 3 (15%)");
-        res.put("auth", "User ORM & 5 Roles Ready");
+        res.put("database", "H2 / PostgreSQL Ready");
         res.put("orm", "Hibernate & JPA Auditing Active");
-        res.put("db", "H2 / PostgreSQL Ready");
 
         return ResponseEntity.ok(Apires.ok("System OK", res));
     }

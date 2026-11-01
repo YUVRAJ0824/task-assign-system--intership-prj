@@ -14,3 +14,4 @@ public class Appmain {
         SpringApplication.run(Appmain.class, args);
     }
 }
+
