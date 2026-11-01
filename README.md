@@ -22,6 +22,7 @@ Full-stack web application combining Jira-style Kanban task management with Serv
 cd frontend
 npm run dev
 ```
+(If PowerShell script blocked: `npm.cmd run dev`)
 Runs at: http://localhost:5173
 
 ### Terminal 2: Backend
@@ -30,14 +31,14 @@ cd backend
 mvn spring-boot:run
 ```
 Runs at: http://localhost:8080 (Health: http://localhost:8080/api/v1/health)
-Or run `EnterprisePlatformApplication.java` in your IDE.
+Or run `Appmain.java` in your IDE.
 
 ## 4-Week Delivery Roadmap (5% Daily)
-Tracked in `docs/ROADMAP_20_DAYS.md` and local `TODO.md`.
+Tracked in `docs/ROADMAP_20_DAYS.md` and `ignore/TODO.md`.
 
 | Week | Milestone Focus | Daily Pace | Progress | Status |
 |:---:|:---|:---:|:---:|:---:|
-| Week 1 | Scaffolding, Pure ORM, RBAC Identity, Projects | 5% / day | 25% | Day 2 Done (10%) |
+| Week 1 | Scaffolding, Pure ORM, RBAC Identity, Projects | 5% / day | 25% | Day 3 Done (15%) |
 | Week 2 | Kanban Engine, Tickets, SLA Timer, Workload | 5% / day | 50% | Scheduled |
 | Week 3 | React SPA, Auth Guards, Dashboard, Kanban UI | 5% / day | 75% | Scheduled |
 | Week 4 | SLA Gauges, Resource Heatmap, Recharts, Docker | 5% / day | 100% | Scheduled |
@@ -48,7 +49,9 @@ TASK-APP-PRJ_INTERNSHIP-JAVA/
 |-- backend/    # Spring Boot 3 REST API (Pure ORM, Controllers, Security)
 |-- frontend/   # React 18 SPA (Vite, Tailwind CSS, Dashboard UI)
 |-- docs/       # Technical specs, PDF, architecture, and 20-day roadmap
-|-- .gitignore  # Excludes build outputs, struct img, and TODO.md
+|-- ignore/     # Local ignored files (TODO.md, struct img)
+|-- .gitignore  # Excludes build outputs and ignore/ folder
+|-- GIT-CMD.md  # Git command cheat sheet and file tree outline
 `-- README.md   # Project overview
 ```
 
@@ -56,6 +59,6 @@ TASK-APP-PRJ_INTERNSHIP-JAVA/
 ```bash
 git status
 git add .
-git commit -m "feat: day X milestone"
+git commit -m "day X: short message"
 git push
 ```

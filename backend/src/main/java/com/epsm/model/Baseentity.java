@@ -14,22 +14,25 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
+// common fields for all tables
 @Getter
 @Setter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity {
+public abstract class Baseentity {
 
+    // 1. auto generated id
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // 2. created timestamp
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
+    // 3. updated timestamp
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 }
-

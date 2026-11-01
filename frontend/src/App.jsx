@@ -40,7 +40,7 @@ function App() {
       days: [
         { day: 1, percent: "5%", title: "Project Scaffolding and Git Governance", done: true, desc: "Git repo initialized, .gitignore (struct img and TODO ignored), Spring Boot 3 API baseline, React 18 UI, ApiResponse standard DTO, and Global Exception Handler." },
         { day: 2, percent: "10%", title: "Pure ORM Persistence Layer", done: true, desc: "PostgreSQL and H2 JPA ORM profiles, Hibernate ddl-auto update, BaseEntity with createdAt/updatedAt auditing." },
-        { day: 3, percent: "15%", title: "User Entity and Role RBAC", done: false, desc: "5 Personas: Admin, PM, Team Lead, Member, Service Agent. BCrypt password hashing." },
+        { day: 3, percent: "15%", title: "User Entity and Role RBAC", done: true, desc: "5 Personas: Admin, PM, Team Lead, Member, Service Agent. User ORM entity, UserRepository, and DTOs." },
         { day: 4, percent: "20%", title: "Stateless JWT Auth Engine", done: false, desc: "JwtTokenProvider, JwtAuthFilter, /api/v1/auth/login and register endpoints." },
         { day: 5, percent: "25%", title: "Project Portfolio Domain", done: false, desc: "Project Entity, CRUD REST API, auto health score indicators (ON_TRACK, AT_RISK, DELAYED)." }
       ]
@@ -102,7 +102,7 @@ function App() {
 
           <div className="flex items-center gap-4">
             <span className="px-2.5 py-1 rounded text-xs font-medium bg-slate-100 text-slate-700 border border-slate-300">
-              Day 2 Complete (10%)
+              Day 3 Complete (15%)
             </span>
           </div>
         </div>
@@ -127,16 +127,16 @@ function App() {
             <div className="pt-3 space-y-1.5">
               <div className="flex justify-between text-xs font-medium text-slate-300">
                 <span>Overall Completion</span>
-                <span>10% / 100%</span>
+                <span>15% / 100%</span>
               </div>
               <div className="w-full bg-slate-800 rounded h-2.5 overflow-hidden border border-slate-700">
                 <div 
                   className="bg-slate-300 h-2.5 rounded transition-all duration-500" 
-                  style={{ width: '10%' }}
+                  style={{ width: '15%' }}
                 ></div>
               </div>
               <p className="text-[11px] text-slate-400">
-                Day 2 (10%) Completed: Pure ORM setup (H2 &amp; PostgreSQL), JPA Auditing config, BaseEntity with createdAt/updatedAt.
+                Day 3 (15%) Completed: User ORM entity, 5 RBAC roles enum, UserRepository, and validation DTOs.
               </p>
             </div>
           </div>
@@ -189,7 +189,7 @@ function App() {
                   className={`p-3.5 rounded border transition flex items-start gap-3 ${
                     d.done 
                       ? 'bg-slate-50 border-slate-300' 
-                      : d.day === 3 
+                      : d.day === 4 
                         ? 'bg-white border-slate-400 ring-1 ring-slate-400' 
                         : 'bg-white border-slate-200'
                   }`}
@@ -210,11 +210,11 @@ function App() {
                       <span className={`text-[10px] px-2 py-0.5 rounded font-medium ${
                         d.done 
                           ? 'bg-slate-200 text-slate-800' 
-                          : d.day === 3 
+                          : d.day === 4 
                             ? 'bg-slate-800 text-white' 
                             : 'bg-slate-100 text-slate-500'
                       }`}>
-                        {d.done ? 'Done' : d.day === 3 ? 'Next (Day 3)' : 'Pending'}
+                        {d.done ? 'Done' : d.day === 4 ? 'Next (Day 4)' : 'Pending'}
                       </span>
                     </div>
                     <p className="text-xs text-slate-600">
@@ -230,24 +230,24 @@ function App() {
         {/* Deliverables and Health Box */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white rounded-lg border border-slate-300 p-5 shadow-sm space-y-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Day 2 Deliverables</span>
-            <h3 className="font-semibold text-slate-900 text-sm">Completed Today (10% Total)</h3>
+            <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">Day 3 Deliverables</span>
+            <h3 className="font-semibold text-slate-900 text-sm">Completed Today (15% Total)</h3>
             <ul className="text-xs text-slate-600 space-y-1.5">
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-slate-700 shrink-0" />
-                <span>BaseEntity model: @MappedSuperclass with id, createdAt, updatedAt</span>
+                <span>User ORM entity: @Entity users extending BaseEntity</span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-slate-700 shrink-0" />
-                <span>JpaConfig: @EnableJpaAuditing for automatic timestamp audits</span>
+                <span>Role enum: 5 RBAC personas (Admin, PM, Lead, Member, Agent)</span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-slate-700 shrink-0" />
-                <span>Pure ORM configuration: H2 in-memory dev, PostgreSQL prod</span>
+                <span>UserRepository: Spring Data JPA interface with query methods</span>
               </li>
               <li className="flex items-center gap-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-slate-700 shrink-0" />
-                <span>Health endpoint updated: ORM and JPA Auditing status active</span>
+                <span>DTOs: UserResponseDto and RegisterRequestDto with validations</span>
               </li>
             </ul>
           </div>
@@ -267,7 +267,7 @@ function App() {
                 <div>
                   <div className="font-semibold text-slate-900">Status: {healthStatus.data?.status || 'UP'}</div>
                   <div className="text-[11px] text-slate-500">{healthStatus.message || 'System operational'}</div>
-                  <div className="text-[11px] text-slate-600 mt-1 font-sans">{healthStatus.data?.milestone} - {healthStatus.data?.orm}</div>
+                  <div className="text-[11px] text-slate-600 mt-1 font-sans">{healthStatus.data?.milestone} - {healthStatus.data?.auth}</div>
                 </div>
               ) : (
                 <span className="text-slate-400">Backend not running on port 8080</span>

@@ -1,6 +1,7 @@
 # ==========================================
 # User & Internal Docs Exclusions
 # ==========================================
+ignore/
 struct img
 TODO.md
 todo.md
