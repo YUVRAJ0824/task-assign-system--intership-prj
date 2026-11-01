@@ -55,13 +55,28 @@ TECHNOLOGY STACK
 | Layer | Technologies |
 |---|---|
 | Backend | Java 17+, Spring Boot 3.3.x |
+| Backend Build Tool | Apache Maven (pom.xml) |
 | Security | Spring Security 6, JWT Authentication |
 | Persistence | Spring Data JPA, Hibernate |
 | Development Database | H2 (In-Memory) |
 | Production Database | PostgreSQL |
 | Frontend | React 18, Vite |
+| Frontend Package Manager | npm (package.json) |
 | Styling | Tailwind CSS |
 | Icons | Lucide Icons |
+
+BUILD AND CONFIGURATION FILES
+
+1. Backend: pom.xml (Project Object Model)
+- The central configuration file for Apache Maven in Java.
+- Equivalent to package.json in JavaScript and Node.js.
+- Declares external libraries and dependencies (Spring Boot, Spring Security, JPA, database drivers).
+- Manages compilation, testing, and packaging into an executable JAR file.
+
+2. Frontend: package.json
+- The central configuration file for npm and Node.js in React.
+- Declares frontend libraries and tools (React, Vite, Tailwind CSS, Lucide icons, Axios).
+- Defines run and build commands (npm run dev, npm run build).
 
 The backend uses Spring Data JPA and Hibernate for ORM-based database operations.
 

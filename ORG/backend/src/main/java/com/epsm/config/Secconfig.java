@@ -18,19 +18,19 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import java.util.List;
 
-// security and cors configuration
+// 1. security and cors configuration
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class Secconfig {
 
-    // 1. password encoder
+    // 2. password encoder
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // 2. security rules - allow public endpoints, protect others
+    // 3. security rules - allow public endpoints, protect others
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -41,6 +41,7 @@ public class Secconfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/v1/health",
+                                "/api/v1/projects/**",
                                 "/api/v1/auth/**",
                                 "/h2-console/**",
                                 "/swagger-ui/**",
@@ -53,7 +54,7 @@ public class Secconfig {
         return http.build();
     }
 
-    // 3. cors setup for react frontend (port 5173)
+    // 4. cors setup for react frontend (port 5173)
     @Bean
     public CorsConfigurationSource corsSource() {
         CorsConfiguration cfg = new CorsConfiguration();
