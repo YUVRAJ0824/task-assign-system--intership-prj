@@ -4,14 +4,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-// 1. main entry point
+// 1. main spring boot entry point
 @SpringBootApplication
-@EnableJpaAuditing // auto fills created/updated dates
-public class Appmain {
+@EnableJpaAuditing
+public class appmain {
 
     public static void main(String[] args) {
-        // start server on port 8080
-        SpringApplication.run(Appmain.class, args);
+        SpringApplication.run(appmain.class, args);
     }
 }
-

@@ -55,13 +55,28 @@ TECHNOLOGY STACK
 | Layer | Technologies |
 |---|---|
 | Backend | Java 17+, Spring Boot 3.3.x |
+| Backend Build Tool | Apache Maven (pom.xml) |
 | Security | Spring Security 6, JWT Authentication |
 | Persistence | Spring Data JPA, Hibernate |
 | Development Database | H2 (In-Memory) |
 | Production Database | PostgreSQL |
 | Frontend | React 18, Vite |
+| Frontend Package Manager | npm (package.json) |
 | Styling | Tailwind CSS |
 | Icons | Lucide Icons |
+
+BUILD AND CONFIGURATION FILES
+
+1. Backend: pom.xml (Project Object Model)
+- The central configuration file for Apache Maven in Java.
+- Equivalent to package.json in JavaScript and Node.js.
+- Declares external libraries and dependencies (Spring Boot, Spring Security, JPA, database drivers).
+- Manages compilation, testing, and packaging into an executable JAR file.
+
+2. Frontend: package.json
+- The central configuration file for npm and Node.js in React.
+- Declares frontend libraries and tools (React, Vite, Tailwind CSS, Lucide icons, Axios).
+- Defines run and build commands (npm run dev, npm run build).
 
 The backend uses Spring Data JPA and Hibernate for ORM-based database operations.
 
@@ -70,15 +85,13 @@ PROJECT STRUCTURE
 ```text
 task-assign-system--intership-prj/
 │
-├── ORG/            # Production incremental implementation (tracked by Git)
-│   ├── backend/    # Spring Boot REST API
-│   └── frontend/   # React Single Page Application
+├── ORG/            # Enterprise platform application
+│   ├── backend/    # Spring Boot 3 REST API & configuration
+│   └── frontend/   # React 18 SPA (Vite & Tailwind CSS)
 │
-├── EXP/            # Local forward-moving sandbox (ignored by Git)
-├── docs/           # Architecture and specification PDF (ignored by Git)
-├── ignore/         # Local private files (ignored by Git)
 ├── .gitignore      # Git exclusion rules
-└── README.md       # Project documentation
+├── README.md       # Project documentation
+└── SETUP.md        # Environment prerequisites & setup guide
 ```
 
 GETTING STARTED
@@ -91,7 +104,7 @@ Ensure the following tools are installed:
 - Maven
 - Node.js and npm
 - Git
-- IntelliJ IDEA, Eclipse or VS Code
+- IntelliJ IDEA or VS Code
 
 
 1. Start the Backend

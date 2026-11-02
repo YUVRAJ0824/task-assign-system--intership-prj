@@ -1,50 +1,34 @@
 package com.epsm.exception;
 
-import com.epsm.dto.Apires;
+import com.epsm.dto.apires;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
 
-// global exception handler for all api errors
+// 1. global exception handler - catches errors across all controllers
 @RestControllerAdvice
 public class globexceptionhandler {
 
-    // 1. not found error class
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public static class Notfoundexception extends RuntimeException {
-        public Notfoundexception(String msg) {
-            super(msg);
-        }
-    }
-
-    // 2. handle 404 not found
-    @ExceptionHandler(Notfoundexception.class)
-    public ResponseEntity<Apires<String>> handleNotFound(Notfoundexception ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Apires.err(ex.getMessage()));
-    }
-
-    // 3. handle 400 validation error
+    // 2. handle validation failures (e.g. @NotBlank, @Size)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Apires<Map<String, String>>> handleValidation(MethodArgumentNotValidException ex) {
-        Map<String, String> errs = new HashMap<>();
-        for (FieldError fe : ex.getBindingResult().getFieldErrors()) {
-            errs.put(fe.getField(), fe.getDefaultMessage());
-        }
+    public ResponseEntity<apires<Map<String, String>>> handleValidation(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(err ->
+                errors.put(err.getField(), err.getDefaultMessage())
+        );
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(Apires.ok("Validation failed", errs));
+                .body(apires.err("Validation failed: " + errors));
     }
 
-    // 4. handle 500 server error
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Apires<String>> handleAll(Exception ex) {
+    // 3. handle general runtime errors
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<apires<String>> handleRuntime(RuntimeException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Apires.err(ex.getMessage()));
+                .body(apires.err(ex.getMessage()));
     }
 }
