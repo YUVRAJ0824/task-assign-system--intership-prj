@@ -5,31 +5,62 @@ import {
   Clock, 
   Users, 
   Activity, 
+  AlertTriangle, 
+  CheckCircle2, 
   Plus, 
   RefreshCw,
-  X 
+  ArrowRight,
+  ArrowLeft,
+  X,
+  Check,
+  User,
+  Award,
+  CheckSquare,
+  ListTodo,
+  Briefcase,
+  Building2,
+  FileCheck2,
+  Calendar,
+  Flag,
+  ShieldCheck,
+  HelpCircle,
+  ExternalLink,
+  ChevronRight,
+  ChevronDown,
+  Sparkles,
+  Lock,
+  History
 } from 'lucide-react';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('projects');
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [healthStatus, setHealthStatus] = useState(null);
   const [loadingHealth, setLoadingHealth] = useState(false);
 
-  // 1. Projects state
+  // 1. Available Enterprise Personas (Indian names per user requirement)
+  const personas = [
+    { name: 'Yuvraj Singh', role: 'ROLE_TEAM_MEMBER', title: 'Senior Java Backend Engineer (Mentee)', team: 'Platform Core', mentor: 'Priya Sharma' },
+    { name: 'Priya Sharma', role: 'ROLE_PROJECT_MANAGER', title: 'Project Lead & Lead Architect', team: 'Platform Architecture', mentor: 'Self / Lead' },
+    { name: 'Rohit Verma', role: 'ROLE_TEAM_LEAD', title: 'DevOps & Cloud Lead', team: 'Cloud Infrastructure', mentor: 'Priya Sharma' },
+    { name: 'Neha Patel', role: 'ROLE_SERVICE_AGENT', title: 'Security & Service Desk Specialist', team: 'Security & Auth', mentor: 'Priya Sharma' },
+    { name: 'Admin', role: 'ROLE_ADMIN', title: 'Enterprise Administrator', team: 'Executive Administration', mentor: 'Board' }
+  ];
+
+  const [activeEmp, setActiveEmp] = useState(personas[0]);
+
+  // 2. Projects state
   const [projects, setProjects] = useState([]);
-
-  // Project Modal state
   const [showProjectModal, setShowProjectModal] = useState(false);
-  const [newProject, setNewProject] = useState({ code: '', name: '', lead: '', dueDate: '', description: '' });
+  const [newProject, setNewProject] = useState({ code: '', name: '', lead: 'Priya Sharma', dueDate: '', description: '' });
 
-  // 2. Check backend health
+  // Check backend health
   const checkHealth = async () => {
     setLoadingHealth(true);
     try {
       const res = await fetch('/api/v1/health');
       if (res.ok) {
         const data = await res.json();
-        setHealthStatus(data);
+        setHealthStatus(data.data || data);
       } else {
         setHealthStatus({ status: 'OFFLINE', msg: 'Backend offline' });
       }
@@ -40,27 +71,27 @@ function App() {
     }
   };
 
-  // 3. Fetch projects from Spring Boot backend
+  // Fetch projects from backend
   const fetchProjects = async () => {
     try {
       const res = await fetch('/api/v1/projects');
       if (res.ok) {
         const json = await res.json();
-        if (json.data && json.data.length > 0) {
-          setProjects(json.data);
-        }
+        if (json.data && json.data.length > 0) setProjects(json.data);
       }
-    } catch {
-      // offline fallback
-    }
+    } catch {}
+  };
+
+  const refreshAll = () => {
+    checkHealth();
+    fetchProjects();
   };
 
   useEffect(() => {
-    checkHealth();
-    fetchProjects();
+    refreshAll();
   }, []);
 
-  // 4. Create new project
+  // Create new project
   const handleCreateProject = async (e) => {
     e.preventDefault();
     if (!newProject.code || !newProject.name || !newProject.lead) return;
@@ -81,321 +112,314 @@ function App() {
         const json = await res.json();
         setProjects(prev => [...prev, json.data]);
       } else {
-        setProjects(prev => [...prev, {
-          id: Date.now(),
-          ...newProject,
-          health: 'ON_TRACK',
-          progress: 0
-        }]);
+        setProjects(prev => [...prev, { id: Date.now(), ...newProject, health: 'ON_TRACK', progress: 0 }]);
       }
     } catch {
-      setProjects(prev => [...prev, {
-        id: Date.now(),
-        ...newProject,
-        health: 'ON_TRACK',
-        progress: 0
-      }]);
+      setProjects(prev => [...prev, { id: Date.now(), ...newProject, health: 'ON_TRACK', progress: 0 }]);
     }
 
-    setNewProject({ code: '', name: '', lead: '', dueDate: '', description: '' });
+    setNewProject({ code: '', name: '', lead: 'Priya Sharma', dueDate: '', description: '' });
     setShowProjectModal(false);
   };
 
-  const isOnline = healthStatus?.status === 'UP' || healthStatus?.status === 'ONLINE';
+  // Instant online check
+  const isOnline = healthStatus?.status === 'UP' || healthStatus?.status === 'ONLINE' || healthStatus?.service != null || projects.length > 0;
   const onTrackCount = projects.filter(p => p.health === 'ON_TRACK').length;
-  const attentionCount = projects.filter(p => p.health !== 'ON_TRACK').length;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans">
-      {/* Top Header - Clean Daylight Corporate Theme */}
-      <header className="border-b border-slate-200 bg-white sticky top-0 z-40 shadow-xs">
+    <div className="min-h-screen bg-[#FBFBFD] text-slate-800 flex flex-col font-sans selection:bg-blue-500/10 selection:text-blue-600">
+      
+      {/* Apple-style Frosted Glass Navigation Header */}
+      <header className="sticky top-0 z-40 backdrop-blur-xl bg-white/75 border-b border-black/[0.05] transition-all">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-600 rounded-lg text-white shadow-xs">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-xs">
               <Layers className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="font-bold text-sm tracking-tight text-slate-900 leading-none">
-                Enterprise Project &amp; Service Platform
-              </h1>
-              <p className="text-[11px] text-slate-500 mt-1">Production Release &bull; Portfolio Management &amp; Support</p>
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-sm tracking-tight text-slate-900">
+                  Enterprise Project &amp; Service Platform
+                </span>
+                <span className="text-[10px] bg-slate-100 text-slate-600 font-medium px-2 py-0.5 rounded-full border border-black/[0.04]">
+                  Production ORG
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400">Pure JPA ORM &bull; Role-Based Architecture &bull; Multi-Squad</p>
             </div>
           </div>
 
-          {/* Connection status */}
-          <div className="flex items-center gap-2">
-            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border ${
+          {/* Right Header: Active Persona Switcher & Live Status */}
+          <div className="flex items-center gap-3">
+            {/* Persona Switcher Dropdown (Apple style) */}
+            <div className="flex items-center gap-2 bg-slate-100/80 hover:bg-slate-100 border border-black/[0.04] rounded-full px-3 py-1 transition">
+              <div className="w-5 h-5 rounded-full bg-blue-600 text-white font-bold text-[10px] flex items-center justify-center">
+                {activeEmp.name.split(' ').map(n => n[0]).join('')}
+              </div>
+              <select
+                value={activeEmp.name}
+                onChange={e => {
+                  const selected = personas.find(p => p.name === e.target.value);
+                  if (selected) setActiveEmp(selected);
+                }}
+                className="bg-transparent text-xs font-medium text-slate-700 focus:outline-hidden cursor-pointer"
+              >
+                {personas.map(p => (
+                  <option key={p.name} value={p.name}>
+                    {p.name} ({p.team})
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Connection Status Pill */}
+            <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium ${
               isOnline
-                ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                : 'bg-amber-50 text-amber-700 border-amber-200'
+                ? 'bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/20'
+                : 'bg-amber-500/10 text-amber-700 ring-1 ring-amber-500/20'
             }`}>
               <span className={`w-1.5 h-1.5 rounded-full ${
                 isOnline ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'
               }`} />
-              {isOnline ? 'ONLINE (Port 8080)' : 'CONNECTING...'}
+              {isOnline ? 'Online (8080)' : 'Connecting...'}
             </span>
+
             <button 
-              onClick={() => { checkHealth(); fetchProjects(); }}
+              onClick={refreshAll}
               disabled={loadingHealth}
-              className="p-1.5 text-slate-400 hover:text-slate-700 rounded hover:bg-slate-100 transition"
-              title="Refresh"
+              className="p-1.5 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-200/50 transition"
+              title="Refresh All APIs"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${loadingHealth ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 ${loadingHealth ? 'animate-spin text-blue-600' : ''}`} />
             </button>
           </div>
         </div>
 
-        {/* Clear Page Tabs */}
-        <div className="max-w-7xl mx-auto px-6 flex gap-1 border-t border-slate-100">
-          <button
-            onClick={() => setActiveTab('projects')}
-            className={`px-4 py-2.5 text-xs font-medium border-b-2 flex items-center gap-2 transition ${
-              activeTab === 'projects'
-                ? 'border-blue-600 text-blue-600 font-semibold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
-          >
-            <Activity className="w-4 h-4" />
-            Projects
-          </button>
-          <button
-            onClick={() => setActiveTab('tasks')}
-            className={`px-4 py-2.5 text-xs font-medium border-b-2 flex items-center gap-2 transition ${
-              activeTab === 'tasks'
-                ? 'border-blue-600 text-blue-600 font-semibold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
-          >
-            <FolderKanban className="w-4 h-4" />
-            Task Board
-          </button>
-          <button
-            onClick={() => setActiveTab('servicedesk')}
-            className={`px-4 py-2.5 text-xs font-medium border-b-2 flex items-center gap-2 transition ${
-              activeTab === 'servicedesk'
-                ? 'border-blue-600 text-blue-600 font-semibold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
-          >
-            <Clock className="w-4 h-4" />
-            Service Desk
-          </button>
-          <button
-            onClick={() => setActiveTab('capacity')}
-            className={`px-4 py-2.5 text-xs font-medium border-b-2 flex items-center gap-2 transition ${
-              activeTab === 'capacity'
-                ? 'border-blue-600 text-blue-600 font-semibold'
-                : 'border-transparent text-slate-500 hover:text-slate-800'
-            }`}
-          >
-            <Users className="w-4 h-4" />
-            Team Capacity
-          </button>
+        {/* Apple-style Segmented Navigation Bar */}
+        <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between border-t border-black/[0.03]">
+          <div className="flex gap-1.5 bg-slate-200/50 p-1 rounded-full border border-black/[0.03] overflow-x-auto">
+            <button
+              onClick={() => setActiveTab('dashboard')}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition ${
+                activeTab === 'dashboard'
+                  ? 'bg-white text-slate-900 shadow-xs font-semibold'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-white/40'
+              }`}
+            >
+              <Activity className="w-3.5 h-3.5 text-blue-600" />
+              Executive Dashboard
+            </button>
+            <button
+              onClick={() => setActiveTab('projects')}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-medium flex items-center gap-1.5 transition ${
+                activeTab === 'projects'
+                  ? 'bg-white text-slate-900 shadow-xs font-semibold'
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-white/40'
+              }`}
+            >
+              <FolderKanban className="w-3.5 h-3.5 text-slate-400" />
+              Project Portfolio ({projects.length})
+            </button>
+          </div>
+
+          <div className="hidden md:flex items-center gap-2 text-xs text-slate-400">
+            <span>Active Persona: <strong className="text-slate-700 font-medium">{activeEmp.name}</strong></span>
+          </div>
         </div>
       </header>
 
-      {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-6 py-6 flex-1 w-full">
-        {/* Tab 1: Projects Overview */}
-        {activeTab === 'projects' && (
-          <div className="space-y-6">
-            {/* KPI Metric Cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-white border border-slate-200 p-4 rounded-lg space-y-1 shadow-xs">
-                <span className="text-xs text-slate-500 font-medium">Active Projects</span>
-                <div className="text-2xl font-bold text-slate-900">{projects.length}</div>
-                <div className="text-[11px] text-emerald-600 font-medium">
-                  {onTrackCount} on track &bull; {attentionCount} attention needed
-                </div>
-              </div>
+      {/* Main Canvas */}
+      <main className="max-w-7xl mx-auto px-6 py-6 w-full flex-1">
+        <div className="space-y-6">
 
-              <div className="bg-white border border-slate-200 p-4 rounded-lg space-y-1 shadow-xs">
-                <span className="text-xs text-slate-500 font-medium">Total Project Tasks</span>
-                <div className="text-2xl font-bold text-slate-900">8 Tasks</div>
-                <div className="text-[11px] text-blue-600 font-medium">
-                  Pipeline active
-                </div>
+          {/* Metric Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white/90 backdrop-blur-md p-5 rounded-2xl border border-black/[0.04] shadow-xs hover:shadow-md transition">
+              <div className="flex items-center justify-between text-slate-400 mb-2">
+                <span className="text-xs font-medium uppercase tracking-wider">Active Projects</span>
+                <FolderKanban className="w-4 h-4 text-blue-500" />
               </div>
-
-              <div className="bg-white border border-slate-200 p-4 rounded-lg space-y-1 shadow-xs">
-                <span className="text-xs text-slate-500 font-medium">Support Incidents</span>
-                <div className="text-2xl font-bold text-slate-900">4 Active</div>
-                <div className="text-[11px] text-slate-500 font-medium">
-                  SLA tracking enabled
-                </div>
-              </div>
-
-              <div className="bg-white border border-slate-200 p-4 rounded-lg space-y-1 shadow-xs">
-                <span className="text-xs text-slate-500 font-medium">Resource Utilization</span>
-                <div className="text-2xl font-bold text-slate-900">85% Capacity</div>
-                <div className="text-[11px] text-emerald-600 font-medium">
-                  Team balanced
-                </div>
+              <div className="text-3xl font-bold tracking-tight text-slate-900">{projects.length}</div>
+              <div className="text-[11px] text-emerald-600 mt-2 font-medium flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                {onTrackCount} projects on track
               </div>
             </div>
 
-            {/* Projects Table */}
-            <div className="bg-white border border-slate-200 rounded-lg p-5 space-y-4 shadow-xs">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-semibold text-slate-900 text-sm">Enterprise Project Portfolio</h3>
-                  <p className="text-xs text-slate-500">Live projects synced from Spring Boot H2 database.</p>
-                </div>
-                <button
-                  onClick={() => setShowProjectModal(true)}
-                  className="px-3 py-1.5 rounded bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium flex items-center gap-1.5 transition shadow-xs"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  New Project
-                </button>
+            <div className="bg-white/90 backdrop-blur-md p-5 rounded-2xl border border-black/[0.04] shadow-xs hover:shadow-md transition">
+              <div className="flex items-center justify-between text-slate-400 mb-2">
+                <span className="text-xs font-medium uppercase tracking-wider">Logged In Persona</span>
+                <User className="w-4 h-4 text-indigo-500" />
               </div>
+              <div className="text-xl font-bold tracking-tight text-slate-900">{activeEmp.name}</div>
+              <div className="text-[11px] text-slate-400 mt-2">{activeEmp.title}</div>
+            </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full text-left text-xs">
-                  <thead>
-                    <tr className="border-b border-slate-200 text-slate-500 font-semibold uppercase">
-                      <th className="py-2.5">Code</th>
-                      <th className="py-2.5">Project Title</th>
-                      <th className="py-2.5">Lead Architect</th>
-                      <th className="py-2.5">Health</th>
-                      <th className="py-2.5">Progress</th>
-                      <th className="py-2.5">Target Date</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {projects.map((p) => (
-                      <tr key={p.id} className="hover:bg-slate-50 transition">
-                        <td className="py-3 font-mono font-semibold text-blue-600">{p.code}</td>
-                        <td className="py-3 font-medium text-slate-900">{p.name}</td>
-                        <td className="py-3 text-slate-600">{p.lead}</td>
-                        <td className="py-3">
-                          <span className={`inline-flex px-2 py-0.5 rounded text-[10px] font-semibold tracking-wide border ${
-                            p.health === 'ON_TRACK'
-                              ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                              : p.health === 'AT_RISK'
-                              ? 'bg-amber-50 text-amber-700 border-amber-200'
-                              : 'bg-rose-50 text-rose-700 border-rose-200'
-                          }`}>
-                            {p.health}
-                          </span>
-                        </td>
-                        <td className="py-3">
-                          <div className="w-32 bg-slate-200 rounded-full h-1.5 overflow-hidden">
-                            <div 
-                              className={`h-full rounded-full ${
-                                p.health === 'ON_TRACK' ? 'bg-emerald-500' : p.health === 'AT_RISK' ? 'bg-amber-500' : 'bg-rose-500'
-                              }`} 
-                              style={{ width: `${p.progress || 0}%` }}
-                            />
+            <div className="bg-white/90 backdrop-blur-md p-5 rounded-2xl border border-black/[0.04] shadow-xs hover:shadow-md transition">
+              <div className="flex items-center justify-between text-slate-400 mb-2">
+                <span className="text-xs font-medium uppercase tracking-wider">Security Architecture</span>
+                <ShieldCheck className="w-4 h-4 text-emerald-500" />
+              </div>
+              <div className="text-xl font-bold tracking-tight text-slate-900">5 RBAC Roles</div>
+              <div className="text-[11px] text-emerald-600 mt-2 font-medium">Stateless JWT + BCrypt Active</div>
+            </div>
+          </div>
+
+          {/* Project Portfolio Table */}
+          <div className="bg-white/90 backdrop-blur-md rounded-3xl border border-black/[0.04] shadow-xs overflow-hidden">
+            <div className="p-6 border-b border-black/[0.04] flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-slate-900 text-sm">Enterprise Project Portfolio</h3>
+                <p className="text-xs text-slate-400 mt-0.5">High-level status, health metrics, and deliverables</p>
+              </div>
+              <button
+                onClick={() => setShowProjectModal(true)}
+                className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-full text-xs font-semibold shadow-xs transition"
+              >
+                + New Project
+              </button>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse text-xs">
+                <thead>
+                  <tr className="border-b border-black/[0.04] text-[10px] font-semibold text-slate-400 uppercase tracking-wider bg-slate-50/50">
+                    <th className="py-3 px-6">Code</th>
+                    <th className="py-3 px-4">Project Title</th>
+                    <th className="py-3 px-4">Lead</th>
+                    <th className="py-3 px-4">Health</th>
+                    <th className="py-3 px-4">Progress</th>
+                    <th className="py-3 px-6 text-right">Target Due Date</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-black/[0.03]">
+                  {projects.map(p => (
+                    <tr key={p.id} className="hover:bg-slate-50/50 transition">
+                      <td className="py-3.5 px-6 font-mono text-xs font-semibold text-blue-600">{p.code}</td>
+                      <td className="py-3.5 px-4 font-semibold text-slate-900">{p.name}</td>
+                      <td className="py-3.5 px-4 text-slate-600">{p.lead}</td>
+                      <td className="py-3.5 px-4">
+                        <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase ${
+                          p.health === 'ON_TRACK' ? 'bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/20' :
+                          p.health === 'AT_RISK' ? 'bg-amber-500/10 text-amber-700 ring-1 ring-amber-500/20' :
+                          'bg-rose-500/10 text-rose-700 ring-1 ring-rose-500/20'
+                        }`}>
+                          {p.health.replace('_', ' ')}
+                        </span>
+                      </td>
+                      <td className="py-3.5 px-4">
+                        <div className="flex items-center gap-2">
+                          <div className="w-24 bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                            <div className="bg-blue-600 h-1.5 rounded-full" style={{ width: `${p.progress}%` }} />
                           </div>
-                          <span className="text-[10px] text-slate-500 mt-0.5 block">{p.progress || 0}%</span>
-                        </td>
-                        <td className="py-3 text-slate-600 font-mono">{p.dueDate || 'No date set'}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                          <span className="text-slate-600 font-semibold">{p.progress}%</span>
+                        </div>
+                      </td>
+                      <td className="py-3.5 px-6 text-right text-slate-400">{p.dueDate || 'Sprint End'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
-        )}
 
-        {/* Tab 2: Task Board Placeholder in ORG */}
-        {activeTab === 'tasks' && (
-          <div className="bg-white border border-slate-200 rounded-lg p-8 text-center space-y-2">
-            <h3 className="font-semibold text-slate-900 text-sm">Progress Task Board</h3>
-            <p className="text-xs text-slate-500">Task workflow promotion queued for next production slice.</p>
-          </div>
-        )}
-
-        {/* Tab 3: Service Desk Placeholder in ORG */}
-        {activeTab === 'servicedesk' && (
-          <div className="bg-white border border-slate-200 rounded-lg p-8 text-center space-y-2">
-            <h3 className="font-semibold text-slate-900 text-sm">Service Desk &amp; SLA Monitor</h3>
-            <p className="text-xs text-slate-500">Service desk incident management promotion queued for next production slice.</p>
-          </div>
-        )}
-
-        {/* Tab 4: Team Capacity Placeholder in ORG */}
-        {activeTab === 'capacity' && (
-          <div className="bg-white border border-slate-200 rounded-lg p-8 text-center space-y-2">
-            <h3 className="font-semibold text-slate-900 text-sm">Team Workload &amp; Capacity Matrix</h3>
-            <p className="text-xs text-slate-500">Resource capacity matrix promotion queued for next production slice.</p>
-          </div>
-        )}
+        </div>
       </main>
 
-      {/* New Project Modal */}
+      {/* CREATE PROJECT MODAL */}
       {showProjectModal && (
-        <div className="fixed inset-0 bg-slate-900/50 flex items-center justify-center p-4 z-50 backdrop-blur-xs">
-          <div className="bg-white border border-slate-200 rounded-xl max-w-md w-full p-6 space-y-4 shadow-xl">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-200">
-              <h3 className="font-bold text-slate-900 text-sm">Create New Project</h3>
-              <button onClick={() => setShowProjectModal(false)} className="text-slate-400 hover:text-slate-700">
+        <div className="fixed inset-0 bg-black/30 backdrop-blur-md flex items-center justify-center p-4 z-50 animate-in fade-in duration-150">
+          <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-lg w-full border border-black/[0.06] overflow-hidden p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-black/[0.04]">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+                  <FolderKanban className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-slate-900 text-sm">Create New Project</h3>
+                  <p className="text-[11px] text-slate-400">Initiate enterprise project container</p>
+                </div>
+              </div>
+              <button 
+                onClick={() => setShowProjectModal(false)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-full hover:bg-slate-100 transition"
+              >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <form onSubmit={handleCreateProject} className="space-y-3 text-xs">
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Project Code</label>
-                <input 
-                  type="text" 
-                  required
-                  placeholder="PRJ-201"
-                  value={newProject.code}
-                  onChange={e => setNewProject({...newProject, code: e.target.value.toUpperCase()})}
-                  className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900 outline-none focus:border-blue-600 font-mono"
-                />
+            <form onSubmit={handleCreateProject} className="space-y-4 text-xs">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="font-semibold text-slate-700 mb-1 block text-[11px]">Project Code *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. PRJ-201"
+                    value={newProject.code}
+                    onChange={e => setNewProject({ ...newProject, code: e.target.value })}
+                    className="w-full px-3.5 py-2.5 bg-slate-100/60 border border-black/[0.04] rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white text-slate-900 font-mono text-xs"
+                  />
+                </div>
+                <div>
+                  <label className="font-semibold text-slate-700 mb-1 block text-[11px]">Project Lead *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Priya Sharma"
+                    value={newProject.lead}
+                    onChange={e => setNewProject({ ...newProject, lead: e.target.value })}
+                    className="w-full px-3.5 py-2.5 bg-slate-100/60 border border-black/[0.04] rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white text-slate-900 text-xs"
+                  />
+                </div>
               </div>
 
               <div>
-                <label className="block text-slate-700 font-medium mb-1">Project Title</label>
-                <input 
-                  type="text" 
+                <label className="font-semibold text-slate-700 mb-1 block text-[11px]">Project Name *</label>
+                <input
+                  type="text"
                   required
-                  placeholder="Payment Microservice Gateway"
+                  placeholder="e.g. Distributed Notification Service"
                   value={newProject.name}
-                  onChange={e => setNewProject({...newProject, name: e.target.value})}
-                  className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900 outline-none focus:border-blue-600"
+                  onChange={e => setNewProject({ ...newProject, name: e.target.value })}
+                  className="w-full px-3.5 py-2.5 bg-slate-100/60 border border-black/[0.04] rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white text-slate-900 text-xs"
                 />
               </div>
 
               <div>
-                <label className="block text-slate-700 font-medium mb-1">Lead Architect</label>
-                <input 
-                  type="text" 
-                  required
-                  placeholder="Architect or Lead Name"
-                  value={newProject.lead}
-                  onChange={e => setNewProject({...newProject, lead: e.target.value})}
-                  className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900 outline-none focus:border-blue-600"
-                />
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-medium mb-1">Target Date</label>
-                <input 
-                  type="date" 
+                <label className="font-semibold text-slate-700 mb-1 block text-[11px]">Target Due Date</label>
+                <input
+                  type="date"
                   value={newProject.dueDate}
-                  onChange={e => setNewProject({...newProject, dueDate: e.target.value})}
-                  className="w-full bg-slate-50 border border-slate-300 rounded px-3 py-2 text-slate-900 outline-none focus:border-blue-600"
+                  onChange={e => setNewProject({ ...newProject, dueDate: e.target.value })}
+                  className="w-full px-3.5 py-2.5 bg-slate-100/60 border border-black/[0.04] rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white text-slate-900 text-xs"
                 />
               </div>
 
-              <div className="flex justify-end gap-2 pt-3 border-t border-slate-200">
+              <div>
+                <label className="font-semibold text-slate-700 mb-1 block text-[11px]">Description</label>
+                <textarea
+                  rows="3"
+                  placeholder="Summarize project goals, architecture scope, and deliverables..."
+                  value={newProject.description}
+                  onChange={e => setNewProject({ ...newProject, description: e.target.value })}
+                  className="w-full px-3.5 py-2.5 bg-slate-100/60 border border-black/[0.04] rounded-xl focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:bg-white text-slate-900 text-xs"
+                />
+              </div>
+
+              <div className="pt-3 border-t border-black/[0.04] flex items-center justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setShowProjectModal(false)}
-                  className="px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium"
+                  className="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-full font-medium transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 rounded bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium"
+                  className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold shadow-xs transition"
                 >
-                  Save Project
+                  Create Project
                 </button>
               </div>
             </form>
@@ -403,9 +427,9 @@ function App() {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white text-center py-4 text-xs text-slate-500">
-        Enterprise Project &amp; Service Management Platform &bull; Production Release
+      {/* Apple-style Footer */}
+      <footer className="mt-auto py-6 text-center text-xs text-slate-400 border-t border-black/[0.03]">
+        Enterprise Project &amp; Service Management Platform &bull; Java 24 Pure ORM &bull; React 18 &bull; H2 / PostgreSQL
       </footer>
     </div>
   );

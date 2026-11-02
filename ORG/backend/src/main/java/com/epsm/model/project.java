@@ -6,10 +6,10 @@ import jakarta.persistence.Table;
 
 import java.time.LocalDate;
 
-// 1. project entity - parent container for tasks and sprints
+// 1. project entity - parent container for tasks and milestones
 @Entity
 @Table(name = "projects")
-public class Project extends Baseentity {
+public class project extends baseentity {
 
     // 2. unique project code (e.g. PRJ-101)
     @Column(unique = true, nullable = false, length = 20)
@@ -42,9 +42,9 @@ public class Project extends Baseentity {
     @Column(nullable = false, length = 20)
     private String status = "ACTIVE";
 
-    public Project() {}
+    public project() {}
 
-    public Project(String code, String name, String description, String lead, String health, Integer progress, LocalDate dueDate, String status) {
+    public project(String code, String name, String description, String lead, String health, Integer progress, LocalDate dueDate, String status) {
         this.code = code;
         this.name = name;
         this.description = description;

@@ -2,30 +2,32 @@ package com.epsm.dto;
 
 import java.time.LocalDateTime;
 
-// 1. api response wrapper - standard json structure
-public class Apires<T> {
+// 1. common api response wrapper for consistency
+public class apires<T> {
+
     private boolean success;
     private String msg;
     private T data;
-    private LocalDateTime time = LocalDateTime.now();
+    private LocalDateTime time;
 
-    public Apires() {}
+    public apires() {
+        this.time = LocalDateTime.now();
+    }
 
-    public Apires(boolean success, String msg, T data) {
+    public apires(boolean success, String msg, T data) {
         this.success = success;
         this.msg = msg;
         this.data = data;
         this.time = LocalDateTime.now();
     }
 
-    // 2. helper for success responses
-    public static <T> Apires<T> ok(String msg, T data) {
-        return new Apires<>(true, msg, data);
+    // 2. static helpers for quick responses
+    public static <T> apires<T> ok(String msg, T data) {
+        return new apires<>(true, msg, data);
     }
 
-    // 3. helper for error responses
-    public static <T> Apires<T> err(String msg) {
-        return new Apires<>(false, msg, null);
+    public static <T> apires<T> err(String msg) {
+        return new apires<>(false, msg, null);
     }
 
     public boolean isSuccess() { return success; }

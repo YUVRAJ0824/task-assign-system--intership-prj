@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 // common fields for all tables
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public abstract class Baseentity {
+public abstract class baseentity {
 
     // 1. auto generated id
     @Id

@@ -1,16 +1,16 @@
 package com.epsm.dto;
 
-import com.epsm.model.Project;
+import com.epsm.model.project;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-// 1. project dto - separate api data from database entity
-public class Projectdto {
+// 1. project data transfer objects
+public class projectdto {
 
-    // 2. request dto - incoming project payload
+    // 2. create project request payload
     public static class Req {
         @NotBlank(message = "Project code is required")
         @Size(max = 20)
@@ -22,7 +22,8 @@ public class Projectdto {
 
         private String description;
 
-        @NotBlank(message = "Lead architect is required")
+        @NotBlank(message = "Project lead is required")
+        @Size(max = 50)
         private String lead;
 
         private String health = "ON_TRACK";
@@ -57,7 +58,7 @@ public class Projectdto {
         public void setStatus(String status) { this.status = status; }
     }
 
-    // 3. response dto - outgoing clean json
+    // 3. project response payload
     public static class Res {
         private Long id;
         private String code;
@@ -72,8 +73,7 @@ public class Projectdto {
 
         public Res() {}
 
-        // 4. map entity to response dto
-        public static Res from(Project p) {
+        public static Res from(project p) {
             Res r = new Res();
             r.setId(p.getId());
             r.setCode(p.getCode());
