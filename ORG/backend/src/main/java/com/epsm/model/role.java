@@ -8,3 +8,4 @@ public enum role {
     ROLE_TEAM_MEMBER,
     ROLE_SERVICE_AGENT
 }
+
