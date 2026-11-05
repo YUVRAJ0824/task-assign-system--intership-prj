@@ -1,11 +1,15 @@
 package com.epsm.config;
 
+import com.epsm.model.approval;
+import com.epsm.model.auditlog;
 import com.epsm.model.milestone;
 import com.epsm.model.project;
 import com.epsm.model.role;
 import com.epsm.model.task;
 import com.epsm.model.ticket;
 import com.epsm.model.user;
+import com.epsm.repository.approvalrepo;
+import com.epsm.repository.auditlogrepo;
 import com.epsm.repository.milestonerepo;
 import com.epsm.repository.projectrepo;
 import com.epsm.repository.taskrepo;
@@ -23,7 +27,7 @@ import java.time.LocalDateTime;
 @Configuration
 public class dataseeder {
 
-    // 2. seed initial users, projects, tasks, milestones, and service tickets
+    // 2. seed initial users, projects, tasks, milestones, tickets, approvals, and audit logs
     @Bean
     public CommandLineRunner seedData(
             projectrepo projectrepo,
@@ -31,6 +35,8 @@ public class dataseeder {
             taskrepo taskrepo,
             milestonerepo milestonerepo,
             ticketrepo ticketrepo,
+            approvalrepo approvalrepo,
+            auditlogrepo auditlogrepo,
             PasswordEncoder passwordEncoder
     ) {
         return args -> {
@@ -155,6 +161,22 @@ public class dataseeder {
                             8,
                             LocalDateTime.now().minusHours(12)
                     ));
+                }
+
+                // 8. seed approval workflow requests (PDF Module 6.6)
+                if (approvalrepo.count() == 0) {
+                    approvalrepo.save(new approval("APR-101", "Production Database Schema Migration", "DEPLOYMENT", "PRJ-102", "Yash", "Puneeth Rajkumar", "APPROVED", "HIGH", "Executes Flyway V2 script adding foreign keys to transaction logs"));
+                    approvalrepo.save(new approval("APR-102", "Allocate 15 Story Points for OAuth2 Refactor", "BUDGET", "PRJ-101", "Yuvraj V", "Puneeth Rajkumar", "APPROVED", "MEDIUM", "Scope extension for enterprise Azure AD single sign-on federation"));
+                    approvalrepo.save(new approval("APR-103", "Cloud Server Scale-up for Traffic Peak", "DEPLOYMENT", "PRJ-103", "Rishab Shetty", "Yash", "PENDING", "HIGH", "Request to spin up 4 additional c6g.xlarge worker instances"));
+                    approvalrepo.save(new approval("APR-104", "External Security Penetration Test Access", "SECURITY", "PRJ-104", "Rishab Shetty", "Puneeth Rajkumar", "APPROVED", "CRITICAL", "Grant read-only staging VPC access to third-party auditor"));
+                }
+
+                // 9. seed security audit logs (PDF Module 10)
+                if (auditlogrepo.count() == 0) {
+                    auditlogrepo.save(new auditlog("system.bootstrap", "SYSTEM_INIT", "PLATFORM", "Enterprise platform booted with Pure JPA ORM profile", "127.0.0.1"));
+                    auditlogrepo.save(new auditlog("admin", "USER_ROLE_ASSIGNED", "yuvraj.v", "Assigned ROLE_TEAM_MEMBER on Platform Core squad", "192.168.1.10"));
+                    auditlogrepo.save(new auditlog("puneeth.rajkumar", "APPROVAL_GRANTED", "APR-101", "Approved Production Database Schema Migration", "192.168.1.12"));
+                    auditlogrepo.save(new auditlog("yuvraj.v", "TASK_STATUS_UPDATE", "TSK-01", "Spring Boot 3 pure ORM setup moved to DONE (+5 story points)", "192.168.1.15"));
                 }
             }
         };

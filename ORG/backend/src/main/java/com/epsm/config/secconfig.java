@@ -54,6 +54,9 @@ public class secconfig {
                                 "/api/v1/tasks/**",
                                 "/api/v1/milestones/**",
                                 "/api/v1/tickets/**",
+                                "/api/v1/approvals/**",
+                                "/api/v1/workload/**",
+                                "/api/v1/audit/**",
                                 "/h2-console/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
