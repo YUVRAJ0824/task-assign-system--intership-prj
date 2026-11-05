@@ -1,11 +1,15 @@
 package com.epsm.config;
 
+import com.epsm.model.milestone;
 import com.epsm.model.project;
 import com.epsm.model.role;
 import com.epsm.model.task;
+import com.epsm.model.ticket;
 import com.epsm.model.user;
+import com.epsm.repository.milestonerepo;
 import com.epsm.repository.projectrepo;
 import com.epsm.repository.taskrepo;
+import com.epsm.repository.ticketrepo;
 import com.epsm.repository.userrepo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -13,17 +17,20 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 // 1. auto data seeder for enterprise prototype
 @Configuration
 public class dataseeder {
 
-    // 2. seed initial users, projects, and tasks
+    // 2. seed initial users, projects, tasks, milestones, and service tickets
     @Bean
     public CommandLineRunner seedData(
             projectrepo projectrepo,
             userrepo userrepo,
             taskrepo taskrepo,
+            milestonerepo milestonerepo,
+            ticketrepo ticketrepo,
             PasswordEncoder passwordEncoder
     ) {
         return args -> {
@@ -92,6 +99,62 @@ public class dataseeder {
                     taskrepo.save(new task("TSK-09", "User role permission matrix", "Map 5 enterprise roles to authorized endpoints", "MEDIUM", 5, "TODO", "Puneeth Rajkumar", "Platform Architecture", "Self / Lead", p1));
                     taskrepo.save(new task("TSK-12", "Audit log export to CSV", "Export project audit trails for compliance reporting", "LOW", 3, "BACKLOG", "Yash", "Cloud Infrastructure", "Puneeth Rajkumar", p2));
                     taskrepo.save(new task("TSK-14", "Two-factor auth mockups", "UX wireframes for SMS and TOTP authenticator setup", "MEDIUM", 5, "BACKLOG", "Rishab Shetty", "Security & Auth", "Puneeth Rajkumar", p4));
+                }
+
+                // 6. seed milestones (PDF Module 6.3)
+                if (milestonerepo.count() == 0) {
+                    milestonerepo.save(new milestone("PRJ-101", "Core Auth & JWT Token Provider", "Complete HMAC-SHA256 token issue and refresh lifecycle", "Puneeth Rajkumar", LocalDate.now().plusDays(4), "COMPLETED", 100));
+                    milestonerepo.save(new milestone("PRJ-101", "RBAC Permission Guard Middleware", "Enforce 5 roles across all REST controllers", "Yuvraj V", LocalDate.now().plusDays(10), "IN_PROGRESS", 70));
+                    milestonerepo.save(new milestone("PRJ-102", "PostgreSQL HikariCP Staging Validation", "Run pool stress tests with 100 concurrent workers", "Yash", LocalDate.now().plusDays(14), "IN_PROGRESS", 50));
+                    milestonerepo.save(new milestone("PRJ-103", "Real-Time 75% SLA Breach Alerts", "Engine triggers high-priority warning when resolution reaches 75%", "Yuvraj V", LocalDate.now().plusDays(7), "IN_PROGRESS", 40));
+                    milestonerepo.save(new milestone("PRJ-104", "SMS & Webhook Dispatch Integration", "Multi-channel broadcast microservice for incident alerts", "Rishab Shetty", LocalDate.now().minusDays(2), "OVERDUE", 25));
+                }
+
+                // 7. seed service desk incident tickets (PDF Module 6.5)
+                if (ticketrepo.count() == 0) {
+                    ticketrepo.save(new ticket(
+                            "TKT-101",
+                            "Payment webhook timeout during checkout",
+                            "High timeout rate on payment callback processing under peak traffic",
+                            "CRITICAL",
+                            "IN_PROGRESS",
+                            "Payment Operations Desk",
+                            2,
+                            LocalDateTime.now().minusHours(1).minusMinutes(45)
+                    ));
+
+                    ticketrepo.save(new ticket(
+                            "TKT-102",
+                            "Slow database query on financial reporting export",
+                            "CSV audit export query exceeds connection threshold causing pool starvation",
+                            "HIGH",
+                            "IN_PROGRESS",
+                            "Finance Operations Desk",
+                            4,
+                            LocalDateTime.now().minusHours(3).minusMinutes(10)
+                    ));
+
+                    ticketrepo.save(new ticket(
+                            "TKT-103",
+                            "User unable to authenticate via single sign-on",
+                            "SAML assertion failure on corporate gateway redirect",
+                            "MEDIUM",
+                            "IN_PROGRESS",
+                            "Operations Desk",
+                            8,
+                            LocalDateTime.now().minusHours(1).minusMinutes(30)
+                    ));
+
+                    ticketrepo.save(new ticket(
+                            "TKT-104",
+                            "Kubernetes ingress certificate expiration warning",
+                            "TLS cert renewal failed on production cluster ingress controller",
+                            "MEDIUM",
+                            "RESOLVED",
+                            "DevOps Operations",
+                            8,
+                            LocalDateTime.now().minusHours(12)
+                    ));
                 }
             }
         };

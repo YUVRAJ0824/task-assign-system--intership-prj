@@ -52,6 +52,8 @@ public class secconfig {
                                 "/api/v1/users/**",
                                 "/api/v1/auth/**",
                                 "/api/v1/tasks/**",
+                                "/api/v1/milestones/**",
+                                "/api/v1/tickets/**",
                                 "/h2-console/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
