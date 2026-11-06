@@ -57,6 +57,7 @@ public class secconfig {
                                 "/api/v1/approvals/**",
                                 "/api/v1/workload/**",
                                 "/api/v1/audit/**",
+                                "/api/v1/analytics/**",
                                 "/h2-console/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
